@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,6 +11,8 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    public static $status = [1 => 'Active', 2 => 'Inactive', 3 => 'Blocked', 4 => 'Deleted'];
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'selected_user',
+        'selected_carpark',
     ];
 
     /**
@@ -41,4 +45,41 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function laratablesStatus($user)
+    {
+        return '<span class="badge badge-' . (new Colors)->getColor($user['status']) . '">' . self::$status[$user['status']] . '</span>';
+    }
+
+    public static function laratablesUsertype($user)
+    {
+        return '<span class="badge badge-danger">' . $user->usertypedata->usertype . '</span>';
+    }
+
+    public static function laratablesCustomAction($user)
+    {
+        return '<i onclick="doEdit(' . $user['id'] . ')" class="la la-edit ml1 text-warning"></i><i onclick="doDelete(' . $user['id'] . ')" class="la la-trash ml-1 text-danger"></i>';
+    }
+
+    public static function laratablesSearchableColumns()
+    {
+        return ['email', 'name'];
+    }
+
+    public static function laratablesQueryConditions($query)
+    {
+        return $query->whereIn('status', [1, 2]);
+    }
+
+    public static function laratablesRoleRelationQuery()
+    {
+        return function ($query) {
+            $query->with('usertypedata');
+        };
+    }
+
+    public function usertypedata()
+    {
+        return $this->hasOne(UserType::class, 'id', 'usertype');
+    }
 }
