@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\CarParkController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PartyController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
@@ -34,4 +35,12 @@ Route::prefix('/usertypes')->group(function () {
     Route::get('/list', [UserTypeController::class, 'list'])->name('admin.usertypes.list')->middleware(['auth']);
     Route::get('/get', [UserTypeController::class, 'getOne'])->name('admin.usertypes.get.one')->middleware(['auth']);
     Route::get('/delete', [UserTypeController::class, 'deleteOne'])->name('admin.usertypes.delete.one')->middleware(['auth']);
+});
+
+Route::prefix('/party')->group(function () {
+    Route::get('/', [PartyController::class, 'index'])->middleware(['auth', 'permitted']);
+    Route::post('/enroll', [PartyController::class, 'enroll'])->name('admin.parties.enroll')->middleware(['auth']);
+    Route::get('/list', [PartyController::class, 'list'])->name('admin.parties.list')->middleware(['auth']);
+    Route::get('/get', [PartyController::class, 'getOne'])->name('admin.parties.get.one')->middleware(['auth']);
+    Route::get('/delete', [PartyController::class, 'deleteOne'])->name('admin.parties.delete.one')->middleware(['auth']);
 });

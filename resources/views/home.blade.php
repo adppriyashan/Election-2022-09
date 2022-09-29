@@ -16,7 +16,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-left">
-                                            <h3 class="info">{{ $carparks }}</h3>
+                                            <h3 class="info">0</h3>
                                             <h6>Car Parks</h6>
                                         </div>
                                         <div>
@@ -38,7 +38,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-left">
-                                            <h3 class="warning">{{ $bookings }}</h3>
+                                            <h3 class="warning">0</h3>
                                             <h6>Bookings</h6>
                                         </div>
                                         <div>
@@ -60,7 +60,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-left">
-                                            <h3 class="success">{{ $customers }}</h3>
+                                            <h3 class="success">0</h3>
                                             <h6>Customers</h6>
                                         </div>
                                         <div>
@@ -82,7 +82,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-left">
-                                            <h3 class="danger">{{ $feedbacks }}</h3>
+                                            <h3 class="danger">0</h3>
                                             <h6>Feedbacks</h6>
                                         </div>
                                         <div>
@@ -135,51 +135,6 @@
 
     @include('layouts.scripts')
 
-    <script>
-        const ctx = document.getElementById('monthlysales').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: @json($dates),
-                datasets: [{
-                    label: 'Sales of last ten days',
-                    data: @json($sales),
-                    backgroundColor: [
-                        'rgba(16, 135, 211, 1)',
-                        'rgba(255, 115, 24, 1)',
-                        'rgba(34, 167, 120, 1)',
-                        'rgba(255, 24, 55, 1)',
-                        'rgba(16, 135, 211, 1)',
-                        'rgba(255, 115, 24, 1)',
-                        'rgba(34, 167, 120, 1)',
-                        'rgba(255, 24, 55, 1)',
-                        'rgba(16, 135, 211, 1)',
-                        'rgba(255, 115, 24, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(16, 135, 211, 1)',
-                        'rgba(255, 115, 24, 1)',
-                        'rgba(34, 167, 120, 1)',
-                        'rgba(255, 24, 55, 1)',
-                        'rgba(16, 135, 211, 1)',
-                        'rgba(255, 115, 24, 1)',
-                        'rgba(34, 167, 120, 1)',
-                        'rgba(255, 24, 55, 1)',
-                        'rgba(16, 135, 211, 1)',
-                        'rgba(255, 115, 24, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
 
 
 

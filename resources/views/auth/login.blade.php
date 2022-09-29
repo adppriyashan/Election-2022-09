@@ -13,7 +13,7 @@
                                             src="{{ asset('assets/app-assets/images/logo/logo.png') }}"
                                             alt="branding logo"></div>
                                 </div>
-                                <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-s"><span>Parking Reservation</span></h6>
+                                <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-s"><span>Election eServices</span></h6>
                             </div>
                             <div class="card-body">
                                 <form method="POST" action="{{ route('login') }}">
@@ -64,21 +64,6 @@
                                             <button type="submit" class="btn btn-primary w-100">
                                                 {{ __('Login') }}
                                             </button>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-0">
-                                        <div class="col-md-12 mt-2" style="text-align: center;">
-
-                                            @if (Route::has('password.request'))
-                                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                                    <small>{{ __('Forgot Your Password?') }}</small>
-                                                </a>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-12" style="text-align: center;">
-                                            <a class="btn btn-link" href="/register">
-                                                <small>No account yet, Register today !</small>
-                                            </a>
                                         </div>
                                     </div>
                                 </form>
