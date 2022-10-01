@@ -14,7 +14,7 @@
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">User List</h4>
+                                <h4 class="card-title">Party List</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -30,8 +30,6 @@
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Usertype</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
 
@@ -44,14 +42,14 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <form autocomplete="off" action="{{ route('admin.users.enroll') }}" method="POST" id="user_form">
+                        <form autocomplete="off" action="{{ route('admin.parties.enroll') }}" method="POST" id="user_form">
                             @csrf
                             <input type="hidden" id="isnew" name="isnew" value="{{ old('isnew') ? old('isnew') : '1' }}">
                             <input type="hidden" id="record" name="record"
                                 value="{{ old('record') ? old('record') : '' }}">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Add/Edit Users</h4>
+                                    <h4 class="card-title">Add/Edit Parties</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -71,48 +69,6 @@
                                                         <input value="{{ old('name') }}" type="text" name="name" id="name"
                                                             class="form-control" placeholder="Your Name ..">
                                                         @error('name')
-                                                            <span
-                                                                class="text-danger"><small>{{ $message }}</small></span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="row mt-1">
-                                                    <div class="col-md-12">
-                                                        <label for="email"><small
-                                                                class="text-dark">Email{!! required_mark() !!}</small></label>
-                                                        <input autocomplete="false" value="{{ old('email') }}" type="text"
-                                                            name="email" id="email" class="readonly form-control"
-                                                            placeholder="Email">
-                                                        @error('email')
-                                                            <span
-                                                                class="text-danger"><small>{{ $message }}</small></span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mt-1">
-                                                    <div class="col-md-12">
-                                                        <label for="password"><small class="text-dark">Password (Min 8
-                                                                Characters){!! required_mark() !!}</small></label>
-                                                        <input autocomplete="false" value="{{ old('password') }}"
-                                                            type="password" name="password" id="password"
-                                                            class="form-control" placeholder="Password">
-                                                        @error('password')
-                                                            <span
-                                                                class="text-danger"><small>{{ $message }}</small></span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mt-1">
-                                                    <div class="col-md-12">
-                                                        <label for="password_confirmation"><small
-                                                                class="text-dark">Password
-                                                                Confirmation{!! required_mark() !!}</small></label>
-                                                        <input value="{{ old('password_confirmation') }}" type="password"
-                                                            name="password_confirmation" id="password_confirmation"
-                                                            class="form-control" placeholder="Confirmation">
-                                                        @error('password_confirmation')
                                                             <span
                                                                 class="text-danger"><small>{{ $message }}</small></span>
                                                         @enderror
@@ -180,17 +136,11 @@
             serverSide: true,
             responsive: true,
             language: {
-                searchPlaceholder: "Name / Email"
+                searchPlaceholder: "Search By ..."
             },
-            ajax: "{{ route('admin.users.list') }}",
+            ajax: "{{ route('admin.parties.list') }}",
             columns: [{
                     name: 'name'
-                },
-                {
-                    name: 'email'
-                },
-                {
-                    name: 'usertype'
                 },
                 {
                     name: 'status',
@@ -212,20 +162,12 @@
             showAlert('Are you sure to edit this record ?', function() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('admin.users.get.one') }}",
+                    url: "{{ route('admin.parties.get.one') }}",
                     data: {
                         'id': id
                     },
                     success: function(response) {
                         $('#name').val(response.name);
-                        $('#mobile').val(response.mobile);
-                        $('#mac').val(response.mac);
-                        $('#nic').val(response.nic);
-                        $('#email').val(response.email);
-                        $('#email').attr('readonly', '');
-                        $('#usertype').val(response.usertype);
-                        $('#password').val('');
-                        $('#password_confirmation').val('');
                         $('#status').val(response.status);
                         $('#record').val(response.id);
                         $('#isnew').val('2').trigger('change');
@@ -236,7 +178,7 @@
 
         function doDelete(id) {
             showAlert('Are you sure to delete this record ?', function() {
-                window.location = "{{ route('admin.users.delete.one') }}?id=" + id;
+                window.location = "{{ route('admin.parties.delete.one') }}?id=" + id;
             });
         }
 

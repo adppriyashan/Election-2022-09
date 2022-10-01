@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::create('parties', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('logo');
             $table->enum('status', array_keys(Party::$status));
             $table->timestamps();
         });

@@ -6,11 +6,10 @@
 
                 </li>
 
-                @if (doPermitted('//parkings'))
-                    <li class=" nav-item"><a href="/parkings"><i
-                                class="
-                        mbri-drag-n-drop2"></i><span class="menu-title"
-                                data-i18n="Apps">Parkings</span></a>
+                @if (doPermitted('//party'))
+                    <li class=" nav-item"><a href="/party"><i
+                                class="la la-balance-scale"></i><span class="menu-title"
+                                data-i18n="Apps">Parties</span></a>
 
                     </li>
                 @endif
