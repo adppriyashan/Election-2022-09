@@ -13,17 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('nominators', function (Blueprint $table) {
+        Schema::create('election_registration_centers', function (Blueprint $table) {
             $table->id();
-            $table->string('ref');
             $table->string('name');
-            $table->string('nic');
-            $table->date('dob');
-            $table->integer('party_id');
+            $table->tinyInteger('registration_center_type');
             $table->string('address');
             $table->string('city')->nullable();
-            $table->tinyInteger('gender')->default(2);
-            $table->tinyInteger('status')->default(2);
+            $table->string('province');
+            $table->string('tel');
+            $table->tinyInteger('status');
             $table->timestamps();
         });
     }
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nominators');
+        Schema::dropIfExists('election_registration_centers');
     }
 };
