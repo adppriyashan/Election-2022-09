@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('nic');
             $table->date('dob');
-            $table->integer('party_id');
+            $table->unsignedBigInteger('party');
             $table->string('address');
             $table->string('city')->nullable();
-            $table->tinyInteger('gender')->default(2);
+            $table->tinyInteger('gender');
+            $table->unsignedBigInteger('province');
             $table->tinyInteger('status')->default(2);
             $table->timestamps();
         });

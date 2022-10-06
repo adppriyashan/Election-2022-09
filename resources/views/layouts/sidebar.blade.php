@@ -30,6 +30,13 @@
                     </li>
                 @endif
 
+                @if (doPermitted('//nominators'))
+                    <li class=" nav-item"><a href="/nominators"><i class="la la-chain-broken"></i><span class="menu-title"
+                                data-i18n="Apps">Nominators</span></a>
+
+                    </li>
+                @endif
+
                 @if (doPermitted('//sale'))
                     <li class=" nav-item"><a href="/sale"><i class="la la-flag-o"></i><span class="menu-title"
                                 data-i18n="Apps">Sale</span></a>

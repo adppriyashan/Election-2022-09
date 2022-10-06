@@ -1,12 +1,9 @@
 <?php
 
-use App\Http\Controllers\API\CarParkController;
 use App\Http\Controllers\ElectionController;
-use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NominatorController;
 use App\Http\Controllers\PartyController;
-use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\VotersController;

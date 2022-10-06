@@ -239,7 +239,7 @@
                                                             </small>
                                                         </label>
 
-                                                        <input type="date" id="election_registration_end_time"
+                                                        <input type="time" id="election_registration_end_time"
                                                             name="election_registration_end_time" class="form-control"
                                                             value="{{ old('election_registration_end_time') }}">
                                                         @error('election_registration_end_time')
