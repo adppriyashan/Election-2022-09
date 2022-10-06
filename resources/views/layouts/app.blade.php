@@ -71,14 +71,17 @@
         .parent{
             height: 100vh;
         }
+        
         .parent>.row{
             display: flex;
             align-items: center;
             height: 100%;
         }
+
         .imgbgchk:checked + label>.tick_container{
             opacity: 1;
         }
+
         .imgbgchk:checked + label>img{
             transform: scale(1.0);
             opacity: 0.3;

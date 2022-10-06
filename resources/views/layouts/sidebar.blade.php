@@ -1,22 +1,37 @@
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a href="/"><i class="mbri-desktop"></i><span class="menu-title"
-                            data-i18n="Dashboard">Dashboard</span></a>
 
+                <li class=" nav-item">
+                    <a href="/">
+                        <i class="mbri-desktop"></i>
+                        <span class="menu-title" data-i18n="Dashboard">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class=" nav-item">
+                    <a href="/voters">
+                        <i class="mbri-user"></i>
+                        <span class="menu-title" data-i18n="Voters">Voters</span>
+                    </a>
+                </li>
+
+                <li class=" nav-item">
+                    <a href="/election">
+                        <i class="mbri-user"></i>
+                        <span class="menu-title" data-i18n="Election">Election</span>
+                    </a>
                 </li>
 
                 @if (doPermitted('//party'))
-                    <li class=" nav-item"><a href="/party"><i
-                                class="la la-balance-scale"></i><span class="menu-title"
+                    <li class=" nav-item"><a href="/party"><i class="la la-balance-scale"></i><span class="menu-title"
                                 data-i18n="Apps">Parties</span></a>
 
                     </li>
                 @endif
 
                 @if (doPermitted('//sale'))
-                    <li class=" nav-item"><a href="/sale"><i
-                                class="la la-flag-o"></i><span class="menu-title"
+                    <li class=" nav-item"><a href="/sale"><i class="la la-flag-o"></i><span class="menu-title"
                                 data-i18n="Apps">Sale</span></a>
 
                     </li>
@@ -24,12 +39,12 @@
 
                 @if (doPermitted('//sale-report') || doPermitted('//feedback-report'))
                     <li class=" nav-item"><a href="#"><i class="
-                        la la-caret-up"></i><span class="menu-title"
-                                data-i18n="Pages">Reports</span></a>
+                        la la-caret-up"></i><span
+                                class="menu-title" data-i18n="Pages">Reports</span></a>
                         <ul class="menu-content">
                             @if (doPermitted('//sale-report'))
-                                <li><a class="menu-item" href="/sale-report"><i
-                                            class="la la-bar-chart"></i><span>Sale Report</span></a>
+                                <li><a class="menu-item" href="/sale-report"><i class="la la-bar-chart"></i><span>Sale
+                                            Report</span></a>
                                 </li>
                             @endif
                             @if (doPermitted('//feedback-report'))
@@ -51,8 +66,8 @@
                                 </li>
                             @endif
                             @if (doPermitted('//users'))
-                                <li><a class="menu-item" href="/usertypes"><i
-                                            class="la la-key"></i><span>Permission Levels</span></a>
+                                <li><a class="menu-item" href="/usertypes"><i class="la la-key"></i><span>Permission
+                                            Levels</span></a>
                                 </li>
                             @endif
                         </ul>
