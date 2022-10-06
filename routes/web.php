@@ -4,6 +4,7 @@ use App\Http\Controllers\API\CarParkController;
 use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NominatorController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
@@ -61,4 +62,12 @@ Route::prefix('/election')->group(function () {
     Route::get('/list', [ElectionController::class, 'list'])->name('admin.election.list')->middleware(['auth']);
     Route::get('/get', [ElectionController::class, 'getOne'])->name('admin.election.get.one')->middleware(['auth']);
     Route::get('/delete', [ElectionController::class, 'deleteOne'])->name('admin.election.delete.one')->middleware(['auth']);
+});
+
+Route::prefix('/nominators')->group(function () {
+    Route::get('/', [NominatorController::class, 'index'])->middleware(['auth', 'permitted']);
+    Route::post('/enroll', [NominatorController::class, 'enroll'])->name('admin.nominators.enroll')->middleware(['auth']);
+    Route::get('/list', [NominatorController::class, 'list'])->name('admin.nominators.list')->middleware(['auth']);
+    Route::get('/get', [NominatorController::class, 'getOne'])->name('admin.nominators.get.one')->middleware(['auth']);
+    Route::get('/delete', [NominatorController::class, 'deleteOne'])->name('admin.nominators.delete.one')->middleware(['auth']);
 });
