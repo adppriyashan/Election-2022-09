@@ -10,4 +10,10 @@ class ElectionController extends Controller
     {
         return view('pages.election');
     }
+
+    public function enroll(Request $request)
+    {
+        
+    }
+
 }

@@ -32,7 +32,6 @@
                                                     <th>Name</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
-
                                                 </tr>
                                             </thead>
                                         </table>
@@ -85,6 +84,21 @@
                                                     </div>
 
                                                     <div class="col-md-12 mt-1">
+                                                        <label for="finger_print_id">
+                                                            <small class="text-dark">
+                                                                Finger Print ID
+                                                                {!! required_mark() !!}
+                                                            </small>
+                                                        </label>
+                                                        <input type="number" id="finger_print_id" name="finger_print_id"
+                                                            class="form-control" placeholder="Finger Print ID"
+                                                            value="{{ old('finger_print_id') }}">
+                                                        @error('finger_print_id')
+                                                            <span class="text-danger"><small>{{ $message }}</small></span>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="col-md-12 mt-1">
                                                         <label for="name">
                                                             <small class="text-dark">NIC{!! required_mark() !!}</small>
                                                         </label>
@@ -104,17 +118,6 @@
                                                             class="form-control" placeholder="address"
                                                             value="{{ old('address') }}">
                                                         @error('address')
-                                                            <span class="text-danger"><small>{{ $message }}</small></span>
-                                                        @enderror
-                                                    </div>
-
-                                                    <div class="col-md-12 mt-1">
-                                                        <label for="address">
-                                                            <small class="text-dark">QR Image{!! required_mark() !!}</small>
-                                                        </label>
-                                                        <input type="file" id="qr_image" name="qr_image"
-                                                            class="form-control" value="{{ old('qr_image') }}">
-                                                        @error('qr_image')
                                                             <span class="text-danger"><small>{{ $message }}</small></span>
                                                         @enderror
                                                     </div>
