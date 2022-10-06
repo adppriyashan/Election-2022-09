@@ -17,8 +17,7 @@ class ElectionController extends Controller
 
     public function enroll(Request $request)
     {
-
-        try {
+         try {
             DB::beginTransaction();
             $validator = Validator::make($request->all(), [
                 'election_name' => 'required',
@@ -52,5 +51,6 @@ class ElectionController extends Controller
         } catch (\Throwable $th) {
             error_log($th);
         }
+    
     }
 }
