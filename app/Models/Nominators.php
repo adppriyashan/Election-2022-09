@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Nominators extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'party_id',
+        'name',
+        'nic',
+        'dob',
+        'address',
+        'province_id',
+        'status',
+    ];
 }
