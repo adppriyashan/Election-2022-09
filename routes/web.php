@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\API\CarParkController;
+use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\VotersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +45,20 @@ Route::prefix('/party')->group(function () {
     Route::get('/list', [PartyController::class, 'list'])->name('admin.parties.list')->middleware(['auth']);
     Route::get('/get', [PartyController::class, 'getOne'])->name('admin.parties.get.one')->middleware(['auth']);
     Route::get('/delete', [PartyController::class, 'deleteOne'])->name('admin.parties.delete.one')->middleware(['auth']);
+});
+
+Route::prefix('/voters')->group(function () {
+    Route::get('/', [VotersController::class, 'index'])->middleware(['auth', 'permitted']);
+    Route::post('/enroll', [VotersController::class, 'enroll'])->name('admin.voters.enroll')->middleware(['auth']);
+    Route::get('/list', [VotersController::class, 'list'])->name('admin.voters.list')->middleware(['auth']);
+    Route::get('/get', [VotersController::class, 'getOne'])->name('admin.voters.get.one')->middleware(['auth']);
+    Route::get('/delete', [VotersController::class, 'deleteOne'])->name('admin.voters.delete.one')->middleware(['auth']);
+});
+
+Route::prefix('/election')->group(function () {
+    Route::get('/', [ElectionController::class, 'index'])->middleware(['auth', 'permitted']);
+    Route::post('/enroll', [ElectionController::class, 'enroll'])->name('admin.election.enroll')->middleware(['auth']);
+    Route::get('/list', [ElectionController::class, 'list'])->name('admin.election.list')->middleware(['auth']);
+    Route::get('/get', [ElectionController::class, 'getOne'])->name('admin.election.get.one')->middleware(['auth']);
+    Route::get('/delete', [ElectionController::class, 'deleteOne'])->name('admin.election.delete.one')->middleware(['auth']);
 });
