@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->String('name');
+            $table->Integer('finger_print_id')->default(0);
             $table->String('nic');
             $table->String('address')->nullable();
-            $table->String('qr_image')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

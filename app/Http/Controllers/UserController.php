@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Provinces;
 use App\Models\User;
 use App\Models\UserType;
 use Freshbitsweb\Laratables\Laratables;
@@ -18,7 +19,8 @@ class UserController extends Controller
     public function index()
     {
         $usertypes = UserType::where('status', 1)->get();
-        return view('pages.users', compact(['usertypes']));
+        $provinces = Provinces::$list;
+        return view('pages.users', compact(['usertypes', 'provinces']));
     }
 
     public function find(Request $request)
@@ -46,6 +48,7 @@ class UserController extends Controller
         $request->validate([
             'isnew' => 'required|in:1,2',
             'name' => 'required|min:1',
+            'province_id' => 'required|numeric',
             'usertype' => 'required|exists:user_types,id',
             'status' => 'required|in:1,2,3'
         ]);
@@ -62,6 +65,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'usertype' => $request->usertype,
+                'province_id' => $request->province_id,
                 'status' => $request->status,
             ];
 
@@ -75,6 +79,7 @@ class UserController extends Controller
             $data = [
                 'name' => $request->name,
                 'usertype' => $request->usertype,
+                'province_id' => $request->province_id,
                 'status' => $request->status
             ];
             if ($request->has('password') && $request->password != '' && $request->has('password_confirmation')) {
@@ -116,4 +121,5 @@ class UserController extends Controller
         ]);
         return User::where('id', $request->id)->first();
     }
+    
 }

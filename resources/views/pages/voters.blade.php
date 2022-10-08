@@ -26,10 +26,12 @@
                             <div class="card-content collapse show">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table w-100" id="usersTable">
+                                        <table class="table w-100" id="votersTable">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
+                                                    <th>NIC</th>
+                                                    <th>Address</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -40,6 +42,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-4">
                         <form autocomplete="off" action="{{ route('admin.voters.enroll') }}" method="POST" id="voter_form"
                             enctype="multipart/form-data">
@@ -165,6 +168,7 @@
                             </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -178,8 +182,9 @@
 
     @include('layouts.footer')
     @include('layouts.scripts')
-    {{-- <script>
-        let listTable = $('#usersTable').DataTable({
+
+    <script>
+        let listTable = $('#votersTable').DataTable({
             lengthMenu: [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -189,9 +194,15 @@
             language: {
                 searchPlaceholder: "Search By ..."
             },
-            ajax: "{{ route('admin.parties.list') }}",
+            ajax: "{{ route('admin.voters.list') }}",
             columns: [{
                     name: 'name'
+                },
+                {
+                    name: 'nic'
+                },
+                {
+                    name: 'Address'
                 },
                 {
                     name: 'status',
@@ -210,15 +221,19 @@
         });
 
         function doEdit(id) {
+            // alert(id);
             showAlert('Are you sure to edit this record ?', function() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('admin.parties.get.one') }}",
+                    url: "{{ route('admin.voters.get.one') }}",
                     data: {
                         'id': id
                     },
                     success: function(response) {
                         $('#name').val(response.name);
+                        $('#finger_print_id').val(response.finger_print_id);
+                        $('#nic').val(response.nic);
+                        $('#address').val(response.address);
                         $('#status').val(response.status);
                         $('#record').val(response.id);
                         $('#isnew').val('2').trigger('change');
@@ -229,7 +244,7 @@
 
         function doDelete(id) {
             showAlert('Are you sure to delete this record ?', function() {
-                window.location = "{{ route('admin.parties.delete.one') }}?id=" + id;
+                window.location = "{{ route('admin.voters.delete.one') }}?id=" + id;
             });
         }
 
@@ -240,5 +255,5 @@
         @if (old('isnew'))
             $('#isnew').val({{ old('isnew') }}).trigger('change');
         @endif
-    </script> --}}
+    </script>
 @endsection

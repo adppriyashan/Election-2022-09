@@ -26,13 +26,18 @@
                             <div class="card-content collapse show">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table w-100" id="usersTable">
+                                        <table class="table w-100" id="electionTable">
                                             <thead>
                                                 <tr>
+                                                    <th>Election Type</th>
                                                     <th>Name</th>
+                                                    <th>Election Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Registration Open Date</th>
+                                                    <th>Registration Close Date</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
-
                                                 </tr>
                                             </thead>
                                         </table>
@@ -43,8 +48,9 @@
                     </div>
                     <div class="col-md-4">
                         <form autocomplete="off" action="{{ route('admin.election.enroll') }}" method="POST"
-                            id="voter_form" enctype="multipart/form-data">
+                            id="voter_form">
                             @csrf
+
                             <input type="hidden" id="isnew" name="isnew"
                                 value="{{ old('isnew') ? old('isnew') : '1' }}">
                             <input type="hidden" id="record" name="record"
@@ -239,7 +245,7 @@
                                                             </small>
                                                         </label>
 
-                                                        <input type="date" id="election_registration_end_time"
+                                                        <input type="time" id="election_registration_end_time"
                                                             name="election_registration_end_time" class="form-control"
                                                             value="{{ old('election_registration_end_time') }}">
                                                         @error('election_registration_end_time')
@@ -274,6 +280,7 @@
                                                 </div>
 
                                                 <hr class="my-2">
+
                                                 <div class="row">
                                                     <div class="col-md-6"> <input id="submitbtn"
                                                             class="btn btn-success w-100" type="submit" value="Submit">
@@ -302,12 +309,11 @@
     </div>
     <!-- END: Content-->
 
-
-
     @include('layouts.footer')
     @include('layouts.scripts')
-    {{-- <script>
-        let listTable = $('#usersTable').DataTable({
+
+    <script>
+        let listTable = $('#electionTable').DataTable({
             lengthMenu: [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -317,9 +323,39 @@
             language: {
                 searchPlaceholder: "Search By ..."
             },
-            ajax: "{{ route('admin.parties.list') }}",
+            ajax: "{{ route('admin.election.list') }}",
             columns: [{
-                    name: 'name'
+                    name: 'election_type'
+                },
+                {
+                    name: 'name',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    name: 'election_date',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    name: 'election_start_time',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    name: 'election_end_time',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    name: 'registration_opening_date',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    name: 'registration_closing_date',
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     name: 'status',
@@ -341,13 +377,20 @@
             showAlert('Are you sure to edit this record ?', function() {
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('admin.parties.get.one') }}",
+                    url: "{{ route('admin.election.get.one') }}",
                     data: {
                         'id': id
                     },
                     success: function(response) {
-                        $('#name').val(response.name);
-                        $('#status').val(response.status);
+                        $('#election_type').val(response.election_type);
+                        $('#election_name').val(response.name);
+                        $('#election_date').val(response.election_name);
+                        $('#election_start_time').val(response.election_start_time);
+                        $('#election_end_time').val(response.election_end_time);
+                        $('#election_registration_start_date').val(response.registration_opening_date);
+                        $('#election_registration_start_time').val(response.registration_opening_time);
+                        $('#election_registration_end_date').val(response.registration_closing_date);
+                        $('#election_registration_end_time').val(response.registration_closing_time);
                         $('#record').val(response.id);
                         $('#isnew').val('2').trigger('change');
                     }
@@ -357,7 +400,7 @@
 
         function doDelete(id) {
             showAlert('Are you sure to delete this record ?', function() {
-                window.location = "{{ route('admin.parties.delete.one') }}?id=" + id;
+                window.location = "{{ route('admin.election.delete.one') }}?id=" + id;
             });
         }
 
@@ -368,5 +411,5 @@
         @if (old('isnew'))
             $('#isnew').val({{ old('isnew') }}).trigger('change');
         @endif
-    </script> --}}
+    </script>
 @endsection
