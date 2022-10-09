@@ -1,620 +1,431 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Oct 09, 2022 at 12:40 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
+/*
+ Navicat Premium Data Transfer
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+ Source Server         : LOCALHOST
+ Source Server Type    : MySQL
+ Source Server Version : 80028
+ Source Host           : localhost:3306
+ Source Schema         : election
 
+ Target Server Type    : MySQL
+ Target Server Version : 80028
+ File Encoding         : 65001
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+ Date: 10/10/2022 00:29:02
+*/
 
---
--- Database: `aries_election_group`
---
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `elections`
---
-
-CREATE TABLE `elections` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `election_type` int(11) NOT NULL,
-  `created_user_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `election_date` date DEFAULT NULL,
-  `election_start_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `election_end_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `registration_opening_date` date DEFAULT NULL,
-  `registration_opening_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `registration_closing_date` date DEFAULT NULL,
-  `registration_closing_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+-- ----------------------------
+-- Table structure for complains
+-- ----------------------------
+DROP TABLE IF EXISTS `complains`;
+CREATE TABLE `complains`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `election` int NOT NULL,
+  `by` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `elections`
---
+-- ----------------------------
+-- Records of complains
+-- ----------------------------
+INSERT INTO `complains` VALUES (1, 'sdsd', 5, 2, '2022-10-09 18:33:37', '2022-10-09 18:33:37');
+INSERT INTO `complains` VALUES (2, 'dfd fd df dfd f', 5, 2, '2022-10-09 18:44:55', '2022-10-09 18:44:55');
 
-INSERT INTO `elections` (`id`, `election_type`, `created_user_id`, `name`, `election_date`, `election_start_time`, `election_end_time`, `registration_opening_date`, `registration_opening_time`, `registration_closing_date`, `registration_closing_time`, `status`, `created_at`, `updated_at`) VALUES
-(5, 1, 2, 'Test 1', '2022-10-31', '08:00', '17:00', '2022-10-08', '08:00', '2022-10-15', '17:00', 1, '2022-10-08 09:22:04', '2022-10-08 09:27:43');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `election_has_candidates`
---
-
-CREATE TABLE `election_has_candidates` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `election_id` int(11) NOT NULL,
-  `candidate_no` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `candidate_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `candidate_nic` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `candidate_party` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `candidate_age` int(11) DEFAULT NULL,
-  `count` int(11) NOT NULL DEFAULT 0,
-  `status` tinyint(4) DEFAULT NULL,
+-- ----------------------------
+-- Table structure for election_has_candidates
+-- ----------------------------
+DROP TABLE IF EXISTS `election_has_candidates`;
+CREATE TABLE `election_has_candidates`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `election_id` int NOT NULL,
+  `candidate_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `candidate_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `candidate_nic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `candidate_party` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `candidate_age` int NULL DEFAULT NULL,
+  `count` int NOT NULL DEFAULT 0,
+  `status` tinyint NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of election_has_candidates
+-- ----------------------------
 
---
--- Table structure for table `election_has_voters`
---
-
-CREATE TABLE `election_has_voters` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `election_id` int(11) NOT NULL,
-  `voter_id` int(11) NOT NULL,
-  `ehc_id` int(11) DEFAULT NULL,
-  `elected_time` datetime DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+-- ----------------------------
+-- Table structure for election_has_voters
+-- ----------------------------
+DROP TABLE IF EXISTS `election_has_voters`;
+CREATE TABLE `election_has_voters`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `election_id` int NOT NULL,
+  `voter_id` int NOT NULL,
+  `ehc_id` int NULL DEFAULT NULL,
+  `elected_time` datetime NULL DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `election_has_voters`
---
+-- ----------------------------
+-- Records of election_has_voters
+-- ----------------------------
+INSERT INTO `election_has_voters` VALUES (6, 5, 1, 1, '2022-10-09 23:08:47', 1, '2022-10-09 23:13:37', NULL);
 
-INSERT INTO `election_has_voters` (`id`, `election_id`, `voter_id`, `ehc_id`, `elected_time`, `status`, `created_at`, `updated_at`) VALUES
-(3, 5, 1, 1, NULL, 1, '2022-10-09 05:05:49', '2022-10-09 05:05:49');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `election_registration_centers`
---
-
-CREATE TABLE `election_registration_centers` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `registration_center_type` tinyint(4) NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `province` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+-- ----------------------------
+-- Table structure for election_registration_centers
+-- ----------------------------
+DROP TABLE IF EXISTS `election_registration_centers`;
+CREATE TABLE `election_registration_centers`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `registration_center_type` tinyint NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of election_registration_centers
+-- ----------------------------
 
---
--- Table structure for table `failed_jobs`
---
+-- ----------------------------
+-- Table structure for elections
+-- ----------------------------
+DROP TABLE IF EXISTS `elections`;
+CREATE TABLE `elections`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `election_type` int NOT NULL,
+  `created_user_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `election_date` date NULL DEFAULT NULL,
+  `election_start_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `election_end_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `registration_opening_date` date NULL DEFAULT NULL,
+  `registration_opening_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `registration_closing_date` date NULL DEFAULT NULL,
+  `registration_closing_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+-- ----------------------------
+-- Records of elections
+-- ----------------------------
+INSERT INTO `elections` VALUES (5, 1, 2, 'Test 1', '2022-10-11', '08:00', '23:51', '2022-10-08', '08:00', '2022-10-15', '17:00', 1, '2022-10-08 14:52:04', '2022-10-09 18:54:37');
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Table structure for failed_jobs
+-- ----------------------------
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE `failed_jobs`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
---
--- Table structure for table `migrations`
---
+-- ----------------------------
+-- Records of failed_jobs
+-- ----------------------------
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+-- ----------------------------
+-- Table structure for migrations
+-- ----------------------------
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
---
--- Dumping data for table `migrations`
---
+-- ----------------------------
+-- Records of migrations
+-- ----------------------------
+INSERT INTO `migrations` VALUES (2, '2014_10_12_100000_create_password_resets_table', 1);
+INSERT INTO `migrations` VALUES (3, '2019_08_19_000000_create_failed_jobs_table', 1);
+INSERT INTO `migrations` VALUES (4, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+INSERT INTO `migrations` VALUES (5, '2022_06_13_154621_create_parking_slots_table', 1);
+INSERT INTO `migrations` VALUES (6, '2022_06_13_164219_create_election_table', 1);
+INSERT INTO `migrations` VALUES (8, '2021_12_21_044250_create_routes_table', 2);
+INSERT INTO `migrations` VALUES (9, '2021_12_21_045534_create_user_types_table', 2);
+INSERT INTO `migrations` VALUES (10, '2021_12_21_060615_create_permissions_table', 2);
+INSERT INTO `migrations` VALUES (12, '2022_07_01_000204_create_parking_records_table', 3);
+INSERT INTO `migrations` VALUES (13, '2022_07_20_002948_create_feedback_table', 4);
+INSERT INTO `migrations` VALUES (16, '2022_09_29_164639_create_parties_table', 6);
+INSERT INTO `migrations` VALUES (18, '2022_10_01_173652_create_election_registration_centers_table', 7);
+INSERT INTO `migrations` VALUES (20, '2022_10_01_175216_create_election_has_candidates_table', 7);
+INSERT INTO `migrations` VALUES (23, '2014_10_12_000000_create_users_table', 8);
+INSERT INTO `migrations` VALUES (24, '2022_10_01_175052_create_voters_table', 8);
+INSERT INTO `migrations` VALUES (25, '2022_10_01_173212_create_elections_table', 9);
+INSERT INTO `migrations` VALUES (27, '2022_09_29_164927_create_nominators_table', 10);
+INSERT INTO `migrations` VALUES (28, '2022_10_09_085253_create_election_has_voters_table', 11);
+INSERT INTO `migrations` VALUES (29, '2022_10_09_090046_create_temp_voters_table', 12);
+INSERT INTO `migrations` VALUES (30, '2022_10_09_182420_create_complains_table', 13);
 
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2022_06_13_154621_create_parking_slots_table', 1),
-(6, '2022_06_13_164219_create_election_table', 1),
-(8, '2021_12_21_044250_create_routes_table', 2),
-(9, '2021_12_21_045534_create_user_types_table', 2),
-(10, '2021_12_21_060615_create_permissions_table', 2),
-(12, '2022_07_01_000204_create_parking_records_table', 3),
-(13, '2022_07_20_002948_create_feedback_table', 4),
-(16, '2022_09_29_164639_create_parties_table', 6),
-(18, '2022_10_01_173652_create_election_registration_centers_table', 7),
-(20, '2022_10_01_175216_create_election_has_candidates_table', 7),
-(23, '2014_10_12_000000_create_users_table', 8),
-(24, '2022_10_01_175052_create_voters_table', 8),
-(25, '2022_10_01_173212_create_elections_table', 9),
-(27, '2022_09_29_164927_create_nominators_table', 10),
-(28, '2022_10_09_085253_create_election_has_voters_table', 11),
-(29, '2022_10_09_090046_create_temp_voters_table', 12);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nominators`
---
-
-CREATE TABLE `nominators` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `ref` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nic` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+-- ----------------------------
+-- Table structure for nominators
+-- ----------------------------
+DROP TABLE IF EXISTS `nominators`;
+CREATE TABLE `nominators`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ref` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `dob` date NOT NULL,
-  `election` bigint(20) UNSIGNED NOT NULL,
-  `party` bigint(20) UNSIGNED NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gender` tinyint(4) NOT NULL,
-  `province` bigint(20) UNSIGNED NOT NULL,
-  `vote_count` int(11) NOT NULL DEFAULT 0,
-  `status` tinyint(4) NOT NULL DEFAULT 2,
+  `election` bigint UNSIGNED NOT NULL,
+  `party` bigint UNSIGNED NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `gender` tinyint NOT NULL,
+  `province` bigint UNSIGNED NOT NULL,
+  `vote_count` int NOT NULL DEFAULT 0,
+  `status` tinyint NOT NULL DEFAULT 2,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `nominators`
---
+-- ----------------------------
+-- Records of nominators
+-- ----------------------------
+INSERT INTO `nominators` VALUES (1, 'REF02321', 'Test Candidate', '25632568V', '2022-10-09', 5, 1, 'Test Candidate Address', 'Colombo', 1, 0, 4, 1, '2022-10-09 06:03:25', '2022-10-09 17:36:17');
 
-INSERT INTO `nominators` (`id`, `ref`, `name`, `nic`, `dob`, `election`, `party`, `address`, `city`, `gender`, `province`, `vote_count`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'REF02321', 'Test Candidate', '25632568V', '2022-10-09', 5, 1, 'Test Candidate Address', 'Colombo', 1, 0, 2, 1, '2022-10-09 00:33:25', '2022-10-09 05:05:49');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `parties`
---
-
-CREATE TABLE `parties` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL,
+-- ----------------------------
+-- Table structure for parties
+-- ----------------------------
+DROP TABLE IF EXISTS `parties`;
+CREATE TABLE `parties`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('1','2','3') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
---
--- Dumping data for table `parties`
---
+-- ----------------------------
+-- Records of parties
+-- ----------------------------
+INSERT INTO `parties` VALUES (1, 'United National Alliance', '1', '2022-10-01 14:30:32', '2022-10-01 14:31:43');
+INSERT INTO `parties` VALUES (2, 'Ealam People\'s Democratic', '1', '2022-10-01 14:30:39', '2022-10-01 17:52:45');
+INSERT INTO `parties` VALUES (3, 'United People\'s Freedom Alliance', '1', '2022-10-01 14:31:11', '2022-10-01 14:31:11');
 
-INSERT INTO `parties` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'United National Alliance', '1', '2022-10-01 09:00:32', '2022-10-01 09:01:43'),
-(2, 'Ealam People\'s Democratic', '1', '2022-10-01 09:00:39', '2022-10-01 12:22:45'),
-(3, 'United People\'s Freedom Alliance', '1', '2022-10-01 09:01:11', '2022-10-01 09:01:11');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `permissions`
---
-
-CREATE TABLE `permissions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `route` int(11) NOT NULL,
-  `usertype` int(11) NOT NULL,
+-- ----------------------------
+-- Table structure for password_resets
+-- ----------------------------
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE `password_resets`  (
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+  INDEX `password_resets_email_index`(`email` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
---
--- Dumping data for table `permissions`
---
+-- ----------------------------
+-- Records of password_resets
+-- ----------------------------
 
-INSERT INTO `permissions` (`id`, `route`, `usertype`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, NULL),
-(2, 2, 1, NULL, NULL),
-(3, 3, 1, NULL, NULL),
-(15, 11, 1, '2022-10-01 08:48:14', '2022-10-01 08:48:14'),
-(16, 12, 1, '2022-10-01 09:10:06', '2022-10-01 09:10:06'),
-(18, 14, 1, '2022-10-01 09:10:06', '2022-10-01 09:10:06'),
-(21, 1, 2, '2022-10-01 09:10:06', '2022-10-01 09:10:06'),
-(22, 13, 2, '2022-10-06 13:17:12', '2022-10-06 13:17:12'),
-(23, 1, 3, '2022-10-08 09:31:42', '2022-10-08 09:31:42'),
-(24, 15, 3, '2022-10-08 12:33:59', '2022-10-08 12:33:59'),
-(26, 16, 1, '2022-10-08 13:41:54', '2022-10-08 13:41:54'),
-(28, 15, 1, '2022-10-09 02:11:36', '2022-10-09 02:11:36'),
-(29, 13, 1, '2022-10-09 02:11:50', '2022-10-09 02:11:50');
+-- ----------------------------
+-- Table structure for permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `route` int NOT NULL,
+  `usertype` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of permissions
+-- ----------------------------
+INSERT INTO `permissions` VALUES (1, 1, 1, NULL, NULL);
+INSERT INTO `permissions` VALUES (2, 2, 1, NULL, NULL);
+INSERT INTO `permissions` VALUES (3, 3, 1, NULL, NULL);
+INSERT INTO `permissions` VALUES (15, 11, 1, '2022-10-01 14:18:14', '2022-10-01 14:18:14');
+INSERT INTO `permissions` VALUES (16, 12, 1, '2022-10-01 14:40:06', '2022-10-01 14:40:06');
+INSERT INTO `permissions` VALUES (18, 14, 1, '2022-10-01 14:40:06', '2022-10-01 14:40:06');
+INSERT INTO `permissions` VALUES (21, 1, 2, '2022-10-01 14:40:06', '2022-10-01 14:40:06');
+INSERT INTO `permissions` VALUES (22, 13, 2, '2022-10-06 18:47:12', '2022-10-06 18:47:12');
+INSERT INTO `permissions` VALUES (23, 1, 3, '2022-10-08 15:01:42', '2022-10-08 15:01:42');
+INSERT INTO `permissions` VALUES (24, 15, 3, '2022-10-08 18:03:59', '2022-10-08 18:03:59');
+INSERT INTO `permissions` VALUES (26, 16, 1, '2022-10-08 19:11:54', '2022-10-08 19:11:54');
+INSERT INTO `permissions` VALUES (28, 15, 1, '2022-10-09 07:41:36', '2022-10-09 07:41:36');
+INSERT INTO `permissions` VALUES (29, 13, 1, '2022-10-09 07:41:50', '2022-10-09 07:41:50');
+INSERT INTO `permissions` VALUES (30, 17, 1, '2022-10-09 17:27:01', '2022-10-09 17:27:01');
+INSERT INTO `permissions` VALUES (31, 1, 7, '2022-10-09 18:16:43', '2022-10-09 18:16:43');
+INSERT INTO `permissions` VALUES (32, 18, 1, '2022-10-09 18:36:53', '2022-10-09 18:36:53');
+INSERT INTO `permissions` VALUES (33, 19, 1, '2022-10-09 18:36:53', '2022-10-09 18:36:53');
 
---
--- Table structure for table `personal_access_tokens`
---
-
-CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+-- ----------------------------
+-- Table structure for personal_access_tokens
+-- ----------------------------
+DROP TABLE IF EXISTS `personal_access_tokens`;
+CREATE TABLE `personal_access_tokens`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `personal_access_tokens_token_unique`(`token` ASC) USING BTREE,
+  INDEX `personal_access_tokens_tokenable_type_tokenable_id_index`(`tokenable_type` ASC, `tokenable_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of personal_access_tokens
+-- ----------------------------
 
---
--- Table structure for table `routes`
---
-
-CREATE TABLE `routes` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `route` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` tinyint(4) NOT NULL,
+-- ----------------------------
+-- Table structure for routes
+-- ----------------------------
+DROP TABLE IF EXISTS `routes`;
+CREATE TABLE `routes`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
---
--- Dumping data for table `routes`
---
+-- ----------------------------
+-- Records of routes
+-- ----------------------------
+INSERT INTO `routes` VALUES (1, 'Dashboard', '/home', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (2, 'User Management', '/users', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (3, 'Permission Level Management', '/usertypes', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (11, 'Party Management', '/party', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (12, 'Candidates Management', '/candidates', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (13, 'Voters Management', '/voters', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (14, 'Election Management', '/election', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (15, 'Nominators Management', '/nominators', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (16, 'Nominators Approve', '/nominators/approve', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (17, 'Results Report', '/results', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (18, 'Complains Management', '/complain', 1, NULL, NULL);
+INSERT INTO `routes` VALUES (19, 'Complains Submit', '/complain/submit', 1, NULL, NULL);
 
-INSERT INTO `routes` (`id`, `name`, `route`, `type`, `created_at`, `updated_at`) VALUES
-(1, 'Dashboard', '/home', 1, NULL, NULL),
-(2, 'User Management', '/users', 1, NULL, NULL),
-(3, 'Permission Level Management', '/usertypes', 1, NULL, NULL),
-(11, 'Party Management', '/party', 1, NULL, NULL),
-(12, 'Candidates Management', '/candidates', 1, NULL, NULL),
-(13, 'Voters Management', '/voters', 1, NULL, NULL),
-(14, 'Election Management', '/election', 1, NULL, NULL),
-(15, 'Nominators Management', '/nominators', 1, NULL, NULL),
-(16, 'Nominators Approve', '/nominators/approve', 1, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `temp_voters`
---
-
-CREATE TABLE `temp_voters` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `election_id` int(11) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 2,
+-- ----------------------------
+-- Table structure for temp_voters
+-- ----------------------------
+DROP TABLE IF EXISTS `temp_voters`;
+CREATE TABLE `temp_voters`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `election_id` int NULL DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT 2,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `temp_voters`
---
+-- ----------------------------
+-- Records of temp_voters
+-- ----------------------------
+INSERT INTO `temp_voters` VALUES (1, 1, 5, 1, '2022-10-09 10:25:37', '2022-10-09 10:25:37');
+INSERT INTO `temp_voters` VALUES (2, 1, 5, 1, '2022-10-09 10:26:14', '2022-10-09 10:26:14');
+INSERT INTO `temp_voters` VALUES (3, 1, 5, 1, '2022-10-09 10:27:10', '2022-10-09 10:27:10');
+INSERT INTO `temp_voters` VALUES (4, 1, 5, 1, '2022-10-09 10:35:45', '2022-10-09 10:35:45');
 
-INSERT INTO `temp_voters` (`id`, `user_id`, `election_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 5, 1, '2022-10-09 04:55:37', '2022-10-09 04:55:37'),
-(2, 1, 5, 1, '2022-10-09 04:56:14', '2022-10-09 04:56:14'),
-(3, 1, 5, 1, '2022-10-09 04:57:10', '2022-10-09 04:57:10'),
-(4, 1, 5, 1, '2022-10-09 05:05:45', '2022-10-09 05:05:45');
+-- ----------------------------
+-- Table structure for user_types
+-- ----------------------------
+DROP TABLE IF EXISTS `user_types`;
+CREATE TABLE `user_types`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `usertype` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('1','2','3','4') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of user_types
+-- ----------------------------
+INSERT INTO `user_types` VALUES (1, 'Administrator', '1', NULL, NULL);
+INSERT INTO `user_types` VALUES (2, 'Gramasewaka', '1', NULL, NULL);
+INSERT INTO `user_types` VALUES (3, 'Election Office Register', '1', NULL, '2022-10-08 15:01:42');
+INSERT INTO `user_types` VALUES (7, 'Election Office', '1', '2022-10-09 18:16:43', '2022-10-09 18:16:43');
 
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `usertype` int(11) NOT NULL DEFAULT 2,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `province_id` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 2,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `usertype` int NOT NULL DEFAULT 2,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `province_id` int NOT NULL DEFAULT 0,
+  `status` int NOT NULL DEFAULT 2,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `users`
---
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES (2, 1, 'Administrator', 0, 1, 'admin@gmail.com', NULL, '$2y$10$sQknqvsFaDWKo6UUOdk6lOcnuyABQUGxg5lPsSmB7ekhKnu5MDID6', NULL, '2022-10-06 19:08:49', '2022-10-06 19:19:06');
+INSERT INTO `users` VALUES (3, 2, 'Grama Chamith', 8, 1, 'grama1@gmail.com', NULL, '$2y$10$XWB8SmdCHIRBiIBJPTVRq.5IVdmgirIXiLfqyrEoliIEEI4AT7MBK', NULL, '2022-10-06 19:15:15', '2022-10-06 19:20:38');
+INSERT INTO `users` VALUES (4, 3, 'Nominator Register', 0, 1, 'nr@gmail.com', NULL, '$2y$10$QuYfW8L4EMWItnKeDT1RbOIXYVpIc3y0pFvMFHAvD0hZND1FKhT6S', NULL, '2022-10-08 15:01:15', '2022-10-08 15:01:15');
+INSERT INTO `users` VALUES (5, 7, 'Election Office 1', 0, 1, 'office@gmail.com', NULL, '$2y$10$OsK0/lb5zTyldG5aoc2TtuVJsXPY4LoG7UTQN4gl8mDcfr3vGd13m', NULL, '2022-10-09 18:17:30', '2022-10-09 18:17:30');
 
-INSERT INTO `users` (`id`, `usertype`, `name`, `province_id`, `status`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 1, 'Administrator', 0, 1, 'admin@gmail.com', NULL, '$2y$10$sQknqvsFaDWKo6UUOdk6lOcnuyABQUGxg5lPsSmB7ekhKnu5MDID6', NULL, '2022-10-06 13:38:49', '2022-10-06 13:49:06'),
-(3, 2, 'Grama Chamith', 8, 1, 'grama1@gmail.com', NULL, '$2y$10$XWB8SmdCHIRBiIBJPTVRq.5IVdmgirIXiLfqyrEoliIEEI4AT7MBK', NULL, '2022-10-06 13:45:15', '2022-10-06 13:50:38'),
-(4, 3, 'Nominator Register', 0, 1, 'nr@gmail.com', NULL, '$2y$10$QuYfW8L4EMWItnKeDT1RbOIXYVpIc3y0pFvMFHAvD0hZND1FKhT6S', NULL, '2022-10-08 09:31:15', '2022-10-08 09:31:15');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_types`
---
-
-CREATE TABLE `user_types` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `usertype` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('1','2','3','4') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+-- ----------------------------
+-- Table structure for voters
+-- ----------------------------
+DROP TABLE IF EXISTS `voters`;
+CREATE TABLE `voters`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `finger_print_id` int NOT NULL DEFAULT 0,
+  `nic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
---
--- Dumping data for table `user_types`
---
+-- ----------------------------
+-- Records of voters
+-- ----------------------------
+INSERT INTO `voters` VALUES (1, 3, 'Voter 1', 1, '55665566v', 'colombo, voter address', 1, '2022-10-07 17:57:07', '2022-10-07 18:53:48');
 
-INSERT INTO `user_types` (`id`, `usertype`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator', '1', NULL, NULL),
-(2, 'Gramasewaka', '1', NULL, NULL),
-(3, 'Election Office Register', '1', NULL, '2022-10-08 09:31:42');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `voters`
---
-
-CREATE TABLE `voters` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `finger_print_id` int(11) NOT NULL DEFAULT 0,
-  `nic` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `voters`
---
-
-INSERT INTO `voters` (`id`, `user_id`, `name`, `finger_print_id`, `nic`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 3, 'Voter 1', 1, '55665566v', 'colombo, voter address', 1, '2022-10-07 12:27:07', '2022-10-07 13:23:48');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `elections`
---
-ALTER TABLE `elections`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `election_has_candidates`
---
-ALTER TABLE `election_has_candidates`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `election_has_voters`
---
-ALTER TABLE `election_has_voters`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `election_registration_centers`
---
-ALTER TABLE `election_registration_centers`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`) USING BTREE;
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Indexes for table `nominators`
---
-ALTER TABLE `nominators`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `parties`
---
-ALTER TABLE `parties`
-  ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`) USING BTREE;
-
---
--- Indexes for table `permissions`
---
-ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Indexes for table `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`) USING BTREE,
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`) USING BTREE;
-
---
--- Indexes for table `routes`
---
-ALTER TABLE `routes`
-  ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Indexes for table `temp_voters`
---
-ALTER TABLE `temp_voters`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
--- Indexes for table `user_types`
---
-ALTER TABLE `user_types`
-  ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Indexes for table `voters`
---
-ALTER TABLE `voters`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `elections`
---
-ALTER TABLE `elections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `election_has_candidates`
---
-ALTER TABLE `election_has_candidates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `election_has_voters`
---
-ALTER TABLE `election_has_voters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `election_registration_centers`
---
-ALTER TABLE `election_registration_centers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT for table `nominators`
---
-ALTER TABLE `nominators`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `parties`
---
-ALTER TABLE `parties`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `permissions`
---
-ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT for table `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `routes`
---
-ALTER TABLE `routes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `temp_voters`
---
-ALTER TABLE `temp_voters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `user_types`
---
-ALTER TABLE `user_types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `voters`
---
-ALTER TABLE `voters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SET FOREIGN_KEY_CHECKS = 1;

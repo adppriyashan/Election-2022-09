@@ -50,26 +50,17 @@
                     </li>
                 @endif
 
-                @if (doPermitted('//sale'))
-                    <li class=" nav-item"><a href="/sale"><i class="la la-flag-o"></i><span class="menu-title"
-                                data-i18n="Apps">Sale</span></a>
-
-                    </li>
-                @endif
-
-                @if (doPermitted('//sale-report') || doPermitted('//feedback-report'))
+                @if (doPermitted('//results') || doPermitted('//complain'))
                     <li class=" nav-item"><a href="#"><i class="
                         la la-caret-up"></i><span
                                 class="menu-title" data-i18n="Pages">Reports</span></a>
                         <ul class="menu-content">
-                            @if (doPermitted('//sale-report'))
-                                <li><a class="menu-item" href="/sale-report"><i class="la la-bar-chart"></i><span>Sale
-                                            Report</span></a>
+                            @if (doPermitted('//results'))
+                                <li><a class="menu-item" href="/results"><i class="la la-bar-chart"></i><span>Results Report</span></a>
                                 </li>
                             @endif
-                            @if (doPermitted('//feedback-report'))
-                                <li><a class="menu-item" href="/feedback-report"><i
-                                            class="la la-bookmark-o"></i><span>Feedback Report</span></a>
+                            @if (doPermitted('//complain'))
+                                <li><a class="menu-item" href="/complain"><i class="la la-bar-chart"></i><span>Complains Report</span></a>
                                 </li>
                             @endif
                         </ul>

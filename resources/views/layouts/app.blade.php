@@ -5,10 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description"
-        content="Parking Reservation">
-    <meta name="keywords"
-        content="parking, car parking, parkings">
+    <meta name="description" content="Parking Reservation">
+    <meta name="keywords" content="parking, car parking, parkings">
     <meta name="author" content="ALEPHAZ">
     <title>{{ env('APP_NAME') }}</title>
     <link rel="apple-touch-icon" href="{{ asset('assets/app-assets/images/logo/logo.png') }}">
@@ -33,13 +31,15 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/fonts/simple-line-icons/style.css') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('assets/app-assets/css/core/colors/palette-gradient.css') }}">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <style>
@@ -63,29 +63,30 @@
             white-space: nowrap;
         }
 
-        .select2-selection__clear{
+        .select2-selection__clear {
             color: red !important;
-            margin-top:1.7px;
+            margin-top: 1.7px;
         }
 
-        .parent{
+        .parent {
             height: 100vh;
         }
-        
-        .parent>.row{
+
+        .parent>.row {
             display: flex;
             align-items: center;
             height: 100%;
         }
 
-        .imgbgchk:checked + label>.tick_container{
+        .imgbgchk:checked+label>.tick_container {
             opacity: 1;
         }
 
-        .imgbgchk:checked + label>img{
+        .imgbgchk:checked+label>img {
             transform: scale(1.0);
             opacity: 0.3;
         }
+
         .tick_container {
             transition: .5s ease;
             opacity: 0;
@@ -97,6 +98,7 @@
             cursor: pointer;
             text-align: center;
         }
+
         .tick {
             background-color: #4CAF50;
             color: white;
@@ -107,14 +109,13 @@
             border-radius: 100%;
         }
 
-        .text-avoid-line-break{
+        .text-avoid-line-break {
             white-space: nowrap;
         }
 
-        .max-height-300{
+        .max-height-300 {
             max-height: 300px;
         }
-
     </style>
 
 </head>
