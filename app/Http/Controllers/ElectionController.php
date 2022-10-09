@@ -19,6 +19,11 @@ class ElectionController extends Controller
 
     public function enroll(Request $request)
     {
+
+        if (Election::where('status', 1)->first()) {
+            return redirect()->back()->with(['code' => 1, 'color' => 'danger', 'msg' => 'Previous Election Exists']);
+        }
+
         if ($request->isnew == 1) {
 
             $request->validate([

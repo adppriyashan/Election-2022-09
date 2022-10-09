@@ -45,4 +45,9 @@ class Election extends Model
     {
         return '<i onclick="doEdit(' . $election['id'] . ')" class="la la-edit ml1 text-warning"></i><i onclick="doDelete(' . $election['id'] . ')" class="la la-trash ml-1 text-danger"></i>';
     }
+
+    public function nominatorsData()
+    {
+        return $this->hasMany(Nominators::class, 'election', 'id');
+    }
 }
