@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 09, 2022 at 08:03 AM
+-- Generation Time: Oct 09, 2022 at 12:40 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -74,6 +74,30 @@ CREATE TABLE `election_has_candidates` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `election_has_voters`
+--
+
+CREATE TABLE `election_has_voters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `election_id` int(11) NOT NULL,
+  `voter_id` int(11) NOT NULL,
+  `ehc_id` int(11) DEFAULT NULL,
+  `elected_time` datetime DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `election_has_voters`
+--
+
+INSERT INTO `election_has_voters` (`id`, `election_id`, `voter_id`, `ehc_id`, `elected_time`, `status`, `created_at`, `updated_at`) VALUES
+(3, 5, 1, 1, NULL, 1, '2022-10-09 05:05:49', '2022-10-09 05:05:49');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `election_registration_centers`
 --
 
@@ -139,7 +163,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (23, '2014_10_12_000000_create_users_table', 8),
 (24, '2022_10_01_175052_create_voters_table', 8),
 (25, '2022_10_01_173212_create_elections_table', 9),
-(27, '2022_09_29_164927_create_nominators_table', 10);
+(27, '2022_09_29_164927_create_nominators_table', 10),
+(28, '2022_10_09_085253_create_election_has_voters_table', 11),
+(29, '2022_10_09_090046_create_temp_voters_table', 12);
 
 -- --------------------------------------------------------
 
@@ -170,7 +196,7 @@ CREATE TABLE `nominators` (
 --
 
 INSERT INTO `nominators` (`id`, `ref`, `name`, `nic`, `dob`, `election`, `party`, `address`, `city`, `gender`, `province`, `vote_count`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'REF02321', 'Test Candidate', '25632568V', '2022-10-09', 5, 1, 'Test Candidate Address', 'Colombo', 1, 0, 0, 1, '2022-10-09 00:33:25', '2022-10-09 00:33:25');
+(1, 'REF02321', 'Test Candidate', '25632568V', '2022-10-09', 5, 1, 'Test Candidate Address', 'Colombo', 1, 0, 2, 1, '2022-10-09 00:33:25', '2022-10-09 05:05:49');
 
 -- --------------------------------------------------------
 
@@ -231,14 +257,14 @@ INSERT INTO `permissions` (`id`, `route`, `usertype`, `created_at`, `updated_at`
 (3, 3, 1, NULL, NULL),
 (15, 11, 1, '2022-10-01 08:48:14', '2022-10-01 08:48:14'),
 (16, 12, 1, '2022-10-01 09:10:06', '2022-10-01 09:10:06'),
-(17, 13, 1, '2022-10-01 09:10:06', '2022-10-01 09:10:06'),
 (18, 14, 1, '2022-10-01 09:10:06', '2022-10-01 09:10:06'),
 (21, 1, 2, '2022-10-01 09:10:06', '2022-10-01 09:10:06'),
 (22, 13, 2, '2022-10-06 13:17:12', '2022-10-06 13:17:12'),
 (23, 1, 3, '2022-10-08 09:31:42', '2022-10-08 09:31:42'),
 (24, 15, 3, '2022-10-08 12:33:59', '2022-10-08 12:33:59'),
-(25, 15, 1, '2022-10-08 13:41:54', '2022-10-08 13:41:54'),
-(26, 16, 1, '2022-10-08 13:41:54', '2022-10-08 13:41:54');
+(26, 16, 1, '2022-10-08 13:41:54', '2022-10-08 13:41:54'),
+(28, 15, 1, '2022-10-09 02:11:36', '2022-10-09 02:11:36'),
+(29, 13, 1, '2022-10-09 02:11:50', '2022-10-09 02:11:50');
 
 -- --------------------------------------------------------
 
@@ -287,6 +313,31 @@ INSERT INTO `routes` (`id`, `name`, `route`, `type`, `created_at`, `updated_at`)
 (14, 'Election Management', '/election', 1, NULL, NULL),
 (15, 'Nominators Management', '/nominators', 1, NULL, NULL),
 (16, 'Nominators Approve', '/nominators/approve', 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `temp_voters`
+--
+
+CREATE TABLE `temp_voters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `election_id` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 2,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `temp_voters`
+--
+
+INSERT INTO `temp_voters` (`id`, `user_id`, `election_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 5, 1, '2022-10-09 04:55:37', '2022-10-09 04:55:37'),
+(2, 1, 5, 1, '2022-10-09 04:56:14', '2022-10-09 04:56:14'),
+(3, 1, 5, 1, '2022-10-09 04:57:10', '2022-10-09 04:57:10'),
+(4, 1, 5, 1, '2022-10-09 05:05:45', '2022-10-09 05:05:45');
 
 -- --------------------------------------------------------
 
@@ -382,6 +433,12 @@ ALTER TABLE `election_has_candidates`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `election_has_voters`
+--
+ALTER TABLE `election_has_voters`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `election_registration_centers`
 --
 ALTER TABLE `election_registration_centers`
@@ -439,6 +496,12 @@ ALTER TABLE `routes`
   ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
+-- Indexes for table `temp_voters`
+--
+ALTER TABLE `temp_voters`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -474,6 +537,12 @@ ALTER TABLE `election_has_candidates`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `election_has_voters`
+--
+ALTER TABLE `election_has_voters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `election_registration_centers`
 --
 ALTER TABLE `election_registration_centers`
@@ -489,7 +558,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `nominators`
@@ -507,7 +576,7 @@ ALTER TABLE `parties`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -520,6 +589,12 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `routes`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `temp_voters`
+--
+ALTER TABLE `temp_voters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
