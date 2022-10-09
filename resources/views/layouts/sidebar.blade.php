@@ -9,19 +9,32 @@
                     </a>
                 </li>
 
-                <li class=" nav-item">
-                    <a href="/voters">
-                        <i class="mbri-user"></i>
-                        <span class="menu-title" data-i18n="Voters">Voters</span>
-                    </a>
-                </li>
+                @if (doPermitted('//voters'))
+                    <li class=" nav-item">
+                        <a href="/voters">
+                            <i class="mbri-user"></i>
+                            <span class="menu-title" data-i18n="Voters">Voters</span>
+                        </a>
+                    </li>
+                @endif
 
-                <li class=" nav-item">
-                    <a href="/election">
-                        <i class="mbri-user"></i>
-                        <span class="menu-title" data-i18n="Election">Election</span>
-                    </a>
-                </li>
+                @if (doPermitted('//nominators'))
+                    <li class=" nav-item">
+                        <a href="/nominators">
+                            <i class="mbri-user"></i>
+                            <span class="menu-title" data-i18n="Nominators">Nominators</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if (doPermitted('//election'))
+                    <li class=" nav-item">
+                        <a href="/election">
+                            <i class="mbri-user"></i>
+                            <span class="menu-title" data-i18n="Election">Election</span>
+                        </a>
+                    </li>
+                @endif
 
                 @if (doPermitted('//party'))
                     <li class=" nav-item"><a href="/party"><i class="la la-balance-scale"></i><span class="menu-title"

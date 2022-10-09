@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Election;
 use App\Models\Nominators;
 use App\Models\Party;
 use Freshbitsweb\Laratables\Laratables;
@@ -12,7 +13,8 @@ class NominatorController extends Controller
     public function index()
     {
         $parties = Party::where('status', 1)->get();
-        return view('pages.nominators', compact('parties'));
+        $elections = Election::where('status', 1)->get();
+        return view('pages.nominators', compact('parties', 'elections'));
     }
 
     public function list()
@@ -26,6 +28,14 @@ class NominatorController extends Controller
             'id' => 'required|exists:nominators,id'
         ]);
         return Nominators::where('id', $request->id)->first();
+    }
+
+    public function approve(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:nominators,id'
+        ]);
+        return Nominators::where('id', $request->id)->update(['status' => 1]);
     }
 
     public function deleteOne(Request $request)
@@ -49,8 +59,9 @@ class NominatorController extends Controller
             'city' => 'required|string',
             'gender' => 'required|numeric',
             'party' => 'required',
+            'election' => 'required',
             'province' => 'required',
-            'status' => 'required|in:1,2,3'
+            'status' => 'nullable|in:1,2,3'
         ]);
 
         $data = [
@@ -62,8 +73,9 @@ class NominatorController extends Controller
             'city' => $request->city,
             'gender' => $request->gender,
             'party' => $request->party,
-            'province' => $request->province,
-            'status' => $request->status,
+            'status' => ($request->has('status'))?$request->status:2,
+            'election' => $request->election,
+            'province' => $request->province
         ];
 
         if ($request->isnew == 1) {

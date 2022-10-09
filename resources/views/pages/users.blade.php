@@ -43,6 +43,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-md-4">
                         <form autocomplete="off" action="{{ route('admin.users.enroll') }}" method="POST" id="user_form">
                             @csrf
@@ -118,6 +119,27 @@
                                                         @enderror
                                                     </div>
                                                 </div>
+                                                <div class="row mt-1">
+                                                    <div class="col-md-12">
+                                                        <label for="usertype"><small>Province
+                                                                {!! required_mark() !!}</small></label>
+                                                        <select class="form-control" name="province_id" id="province_id">
+                                                            @foreach (App\Models\Provinces::$list as $id=>$province)
+                                                                <option
+                                                                    {{ old('province') == $id ? 'selected' : '' }}
+                                                                    value="{{ $id }}">
+                                                                    {{ $province }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('province_id')
+                                                            <span class="text-danger">
+                                                                <small>{{ $message }}</small>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                
                                                 <div class="row mt-1">
                                                     <div class="col-md-12">
                                                         <label for="usertype"><small>Usertype
@@ -238,12 +260,10 @@
                     },
                     success: function(response) {
                         $('#name').val(response.name);
-                        $('#mobile').val(response.mobile);
-                        $('#mac').val(response.mac);
-                        $('#nic').val(response.nic);
                         $('#email').val(response.email);
                         $('#email').attr('readonly', '');
                         $('#usertype').val(response.usertype);
+                        $('#province_id').val(response.province_id);
                         $('#password').val('');
                         $('#password_confirmation').val('');
                         $('#status').val(response.status);

@@ -19,11 +19,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('nic');
             $table->date('dob');
+            $table->unsignedBigInteger('election');
             $table->unsignedBigInteger('party');
             $table->string('address');
             $table->string('city')->nullable();
             $table->tinyInteger('gender');
             $table->unsignedBigInteger('province');
+            $table->integer('vote_count')->default(0);
             $table->tinyInteger('status')->default(2);
             $table->timestamps();
         });

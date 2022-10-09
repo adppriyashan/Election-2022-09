@@ -160,6 +160,27 @@
                                                         @enderror
                                                     </div>
                                                     <div class="col-md-12 mt-1">
+                                                        <label for="election">
+                                                            <small>Election
+                                                                {!! required_mark() !!}
+                                                            </small>
+                                                        </label>
+                                                        <select class="form-control" name="election" id="election">
+                                                            @foreach ($elections as $key => $item)
+                                                                <option
+                                                                    {{ old('election') == $item->id ? 'selected' : '' }}
+                                                                    value="{{ $item->id }}">
+                                                                    {{ $item->name }} : {{ $item->election_date }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('election')
+                                                            <span class="text-danger">
+                                                                <small>{{ $message }}</small>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="col-md-12 mt-1">
                                                         <label for="party"><small>Party
                                                                 {!! required_mark() !!}</small></label>
                                                         <select class="form-control" name="party" id="party">
@@ -171,30 +192,33 @@
                                                             @endforeach
                                                         </select>
                                                         @error('party')
+
                                                             <span class="text-danger">
                                                                 <small>{{ $message }}</small>
                                                             </span>
                                                         @enderror
                                                     </div>
-                                                    <div class="col-md-12 mt-1">
-                                                        <label for="status"><small>Status
-                                                                {!! required_mark() !!}</small></label>
-                                                        <select class="form-control" name="status" id="status">
-                                                            <option {{ old('status') == 1 ? 'selected' : '' }}
-                                                                value="1">
-                                                                Active
-                                                            </option>
-                                                            <option {{ old('status') == 2 ? 'selected' : '' }}
-                                                                value="2">
-                                                                Inactive
-                                                            </option>
-                                                        </select>
-                                                        @error('status')
-                                                            <span class="text-danger">
-                                                                <small>{{ $message }}</small>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
+                                                    @if (doPermitted('//nominators/approve'))
+                                                        <div class="col-md-12 mt-1">
+                                                            <label for="status"><small>Status
+                                                                    {!! required_mark() !!}</small></label>
+                                                            <select class="form-control" name="status" id="status">
+                                                                @foreach (App\Models\Nominators::$status as $key=>$item)
+                                                                <option {{ old('status') == $key ? 'selected' : '' }}
+                                                                value="{{ $key }}">
+                                                                {{ $item }}
+                                                            </option> 
+                                                                @endforeach
+                                                                
+                                                            </select>
+                                                            @error('status')
+                                                                <span class="text-danger">
+                                                                    <small>{{ $message }}</small>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    @endif
+
                                                 </div>
 
                                                 <hr class="my-2">
@@ -294,9 +318,27 @@
                         $('#gender').val(response.gender);
                         $('#province').val(response.province);
                         $('#party').val(response.party);
-                        $('#status').val(response.status);
+                        $('#election').val(response.election);
+                        @if (doPermitted('//nominators/approve'))
+                            $('#status').val(response.status);
+                        @endif
                         $('#record').val(response.id);
                         $('#isnew').val('2').trigger('change');
+                    }
+                });
+            });
+        }
+
+        function doApprove(id) {
+            showAlert('Are you sure to approve this record ?', function() {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('admin.nominators.approve.one') }}",
+                    data: {
+                        'id': id
+                    },
+                    success: function(response) {
+                        listTable.ajax.reload();
                     }
                 });
             });

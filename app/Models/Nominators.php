@@ -9,9 +9,9 @@ class Nominators extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ref', 'name', 'nic', 'dob', 'party', 'address', 'city', 'gender', 'province', 'status'];
+    protected $fillable = ['ref', 'name', 'nic', 'dob', 'party', 'election', 'address', 'city', 'gender', 'province', 'status'];
 
-    public static $status = [1 => 'Active', 2 => 'Inactive', 3 => 'Deleted'];
+    public static $status = [1 => 'Approved', 2 => 'Pending', 3 => 'Declined'];
 
     public static function laratablesStatus($rec)
     {
@@ -20,7 +20,11 @@ class Nominators extends Model
 
     public static function laratablesCustomAction($rec)
     {
-        return '<i onclick="doEdit(' . $rec['id'] . ')" class="la la-edit ml1 text-warning"></i><i onclick="doDelete(' . $rec['id'] . ')" class="la la-trash ml-1 text-danger"></i>';
+        $approveButton = '';
+        if (doPermitted('//nominators/approve')) {
+            $approveButton = '<i onclick="doApprove(' . $rec['id'] . ')" class="la la-check ml-1 text-success"></i>';
+        }
+        return $approveButton.'<i onclick="doEdit(' . $rec['id'] . ')" class="la la-edit ml1 text-warning ml-1"></i><i onclick="doDelete(' . $rec['id'] . ')" class="la la-trash ml-1 text-danger"></i>';
     }
 
     public static function laratablesProvince($rec)

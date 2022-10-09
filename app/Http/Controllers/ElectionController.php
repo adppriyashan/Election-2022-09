@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Election;
+
 use Carbon\Carbon;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
+use Freshbitsweb\Laratables\Laratables;
 use Illuminate\Support\Facades\DB;
 
 class ElectionController extends Controller
@@ -17,40 +19,73 @@ class ElectionController extends Controller
 
     public function enroll(Request $request)
     {
-         try {
-            DB::beginTransaction();
-            $validator = Validator::make($request->all(), [
-                'election_name' => 'required',
+        if ($request->isnew == 1) {
+
+            $request->validate([
+                'election_type' => 'required|in:1,2',
+                'election_name' => 'required|string',
                 'election_date' => 'required',
                 'election_start_time' => 'required',
                 'election_end_time' => 'required',
+                'election_registration_start_date' => 'required',
+                'election_registration_end_date' => 'required',
+                'election_registration_start_time' => 'required',
+                'election_registration_end_time' => 'required',
+                'status' => 'required|in:1,2,3',
             ]);
 
-            if ($validator->fails()) {
-                error_log(json_encode($validator->errors()->all()));
-                return redirect('/createElection')->with('status', 'Something went wrong');
-            }
-
-            if (Election::where('status', 1)->first()) {
-                return redirect('/createElection')->with('status', 'Please complete all elections before create a new');
-            }
-
             $data = [
-                'user_id' => auth()->user()->id,
+                'election_type' => $request->election_type,
+                'created_user_id' => auth()->user()->id,
                 'name' => $request->election_name,
-                'date' => $request->election_date,
-                'start_time' => Carbon::parse($request->election_start_time),
-                'end_time' => Carbon::parse($request->election_end_time),
-                'status' => 1,
+                'election_date' =>  $request->election_name,
+                'election_start_time' => $request->election_start_time,
+                'election_end_time' =>  $request->election_end_time,
+                'registration_opening_date' => $request->election_registration_start_date,
+                'registration_opening_time' => $request->election_registration_start_time,
+                'registration_closing_date' => $request->election_registration_end_date,
+                'registration_closing_time' => $request->election_registration_end_time,
+                'status' => $request->status,
             ];
 
             Election::create($data);
-            DB::commit();
+        } else {
+            $request->validate([
+                'status' => 'required|in:1,2,3'
+            ]);
 
-            return redirect('/createElection')->with('status', 'Saved Successfully');
-        } catch (\Throwable $th) {
-            error_log($th);
+            $data = [
+                'status' => $request->status
+            ];
+
+            Election::where('id', $request->record)->update($data);
         }
-    
+
+        return redirect()->back()->with(['code' => 1, 'color' => 'success', 'msg' => 'Election Successfully ' . (($request->isnew == 1) ? 'Registered' : 'Updated')]);
+    }
+
+    public function list()
+    {
+        return Laratables::recordsOf(Election::class);
+    }
+
+
+    public function getOne(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:elections,id'
+        ]);
+
+        return Election::where('id', $request->id)->first();
+    }
+
+    public function deleteOne(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:elections,id'
+        ]);
+        Election::where('id', $request->id)->update(['status' => 4]);
+
+        return redirect()->back()->with(['code' => 1, 'color' => 'danger', 'msg' => 'Voter Successfully Removed']);
     }
 }

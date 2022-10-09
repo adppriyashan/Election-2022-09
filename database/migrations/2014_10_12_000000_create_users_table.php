@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->integer('usertype')->default(2);
             $table->string('name');
+            $table->integer('province_id')->default(0);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('status')->default(2);
             $table->rememberToken();
             $table->timestamps();
         });
