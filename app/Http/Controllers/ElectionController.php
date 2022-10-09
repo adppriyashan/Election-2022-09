@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Election;
+
+use Carbon\Carbon;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Freshbitsweb\Laratables\Laratables;
+use Illuminate\Support\Facades\DB;
 
 class ElectionController extends Controller
 {
@@ -15,9 +19,6 @@ class ElectionController extends Controller
 
     public function enroll(Request $request)
     {
-
-        error_log(json_encode($request->all()));
-
         if ($request->isnew == 1) {
 
             $request->validate([

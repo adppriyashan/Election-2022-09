@@ -29,6 +29,7 @@ class NominatorController extends Controller
         ]);
         return Nominators::where('id', $request->id)->first();
     }
+
     public function approve(Request $request)
     {
         $request->validate([

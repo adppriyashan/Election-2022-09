@@ -192,6 +192,7 @@
                                                             @endforeach
                                                         </select>
                                                         @error('party')
+
                                                             <span class="text-danger">
                                                                 <small>{{ $message }}</small>
                                                             </span>
@@ -217,6 +218,7 @@
                                                             @enderror
                                                         </div>
                                                     @endif
+
                                                 </div>
 
                                                 <hr class="my-2">
