@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Election;
-
+use App\Models\ElectionHasVoters;
+use App\Models\Nominators;
 use Carbon\Carbon;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
@@ -69,7 +70,6 @@ class ElectionController extends Controller
         return Laratables::recordsOf(Election::class);
     }
 
-
     public function getOne(Request $request)
     {
         $request->validate([
@@ -88,4 +88,5 @@ class ElectionController extends Controller
 
         return redirect()->back()->with(['code' => 1, 'color' => 'danger', 'msg' => 'Voter Successfully Removed']);
     }
+
 }
