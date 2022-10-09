@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->tinyInteger('gender');
             $table->unsignedBigInteger('province');
+            $table->integer('vote_count')->default(0);
             $table->tinyInteger('status')->default(2);
             $table->timestamps();
         });
