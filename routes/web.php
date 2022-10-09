@@ -69,5 +69,6 @@ Route::prefix('/nominators')->group(function () {
     Route::post('/enroll', [NominatorController::class, 'enroll'])->name('admin.nominators.enroll')->middleware(['auth']);
     Route::get('/list', [NominatorController::class, 'list'])->name('admin.nominators.list')->middleware(['auth']);
     Route::get('/get', [NominatorController::class, 'getOne'])->name('admin.nominators.get.one')->middleware(['auth']);
+    Route::get('/approve', [NominatorController::class, 'approve'])->name('admin.nominators.approve.one')->middleware(['auth']);
     Route::get('/delete', [NominatorController::class, 'deleteOne'])->name('admin.nominators.delete.one')->middleware(['auth']);
 });

@@ -18,14 +18,14 @@
                     </li>
                 @endif
 
-                {{-- @if (doPermitted('//nominators')) --}}
+                @if (doPermitted('//nominators'))
                     <li class=" nav-item">
                         <a href="/nominators">
                             <i class="mbri-user"></i>
                             <span class="menu-title" data-i18n="Nominators">Nominators</span>
                         </a>
                     </li>
-                {{-- @endif --}}
+                @endif
 
                 @if (doPermitted('//election'))
                     <li class=" nav-item">
