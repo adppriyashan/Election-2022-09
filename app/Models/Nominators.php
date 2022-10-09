@@ -9,7 +9,20 @@ class Nominators extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ref','vote_count', 'name', 'nic', 'dob', 'party', 'election', 'address', 'city', 'gender', 'province', 'status'];
+    protected $fillable = [
+        'ref', 
+        'vote_count', 
+        'name', 
+        'nic', 
+        'dob', 
+        'party', 
+        'election', 
+        'address', 
+        'city', 
+        'gender', 
+        'province', 
+        'status'
+    ];
 
     public static $status = [1 => 'Approved', 2 => 'Pending', 3 => 'Declined'];
 

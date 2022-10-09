@@ -69,3 +69,11 @@ Route::prefix('/nominators')->group(function () {
     Route::get('/approve', [NominatorController::class, 'approve'])->name('admin.nominators.approve.one')->middleware(['auth']);
     Route::get('/delete', [NominatorController::class, 'deleteOne'])->name('admin.nominators.delete.one')->middleware(['auth']);
 });
+
+Route::get('/vote', function () {
+    return view('main');
+});
+
+Route::get('/verifyVoter', [ElectionController::class, 'verifyVoter']);
+Route::get('/checkVoterVerification', [ElectionController::class, 'checkVoterVerification']);
+Route::post('/enrollVote', [ElectionController::class, 'enrollVote']);
