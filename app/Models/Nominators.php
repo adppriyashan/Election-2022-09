@@ -61,4 +61,10 @@ class Nominators extends Model
     {
         return $this->hasOne(Party::class, 'id', 'party');
     }
+
+    public function electionData()
+    {
+        return $this->hasOne(Election::class, 'id', 'election');
+    }
+
 }
