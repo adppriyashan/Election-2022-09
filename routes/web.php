@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NominatorController;
 use App\Http\Controllers\PartyController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\VotersController;
@@ -59,7 +61,20 @@ Route::prefix('/election')->group(function () {
     Route::get('/list', [ElectionController::class, 'list'])->name('admin.election.list')->middleware(['auth']);
     Route::get('/get', [ElectionController::class, 'getOne'])->name('admin.election.get.one')->middleware(['auth']);
     Route::get('/delete', [ElectionController::class, 'deleteOne'])->name('admin.election.delete.one')->middleware(['auth']);
+    Route::get('/end', [ElectionController::class, 'end'])->name('admin.election.end')->middleware(['auth']);
 });
+
+Route::prefix('/results')->group(function () {
+    Route::get('/', [ResultController::class, 'index'])->middleware(['auth', 'permitted']);
+    Route::get('/list', [ResultController::class, 'list'])->name('admin.results.list')->middleware(['auth']);
+});
+
+Route::prefix('/complain')->group(function () {
+    Route::get('/', [ComplainController::class, 'index'])->middleware(['auth', 'permitted']);
+    Route::get('/list', [ComplainController::class, 'list'])->name('admin.complain.list')->middleware(['auth']);
+    Route::get('/submit', [ComplainController ::class, 'submit'])->name('admin.complain.submit')->middleware(['auth']);
+});
+
 
 Route::prefix('/nominators')->group(function () {
     Route::get('/', [NominatorController::class, 'index'])->middleware(['auth', 'permitted']);

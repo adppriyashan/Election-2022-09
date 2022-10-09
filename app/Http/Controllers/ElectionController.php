@@ -87,6 +87,15 @@ class ElectionController extends Controller
         return Election::where('id', $request->id)->first();
     }
 
+    public function end(Request $request)
+    {
+        $request->validate([
+            'election' => 'required|exists:elections,id'
+        ]);
+
+        return Election::where('id', $request->election)->update(['status' => 2]);
+    }
+
     public function deleteOne(Request $request)
     {
         $request->validate([

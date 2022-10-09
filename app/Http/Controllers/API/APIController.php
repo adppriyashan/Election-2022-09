@@ -21,15 +21,19 @@ class APIController extends Controller
                 $query = Nominators::where('election', $availableElection->id);
                 if ($availableElection->election_type == 1) {
                     //Presidencial
+                    error_log('data');
                     return $query->with('partyData')->with('electionData')->get();
                 } else {
+                    error_log('data');
                     return $query->where('province', $userId->province_id)->with('partyData')->with('electionData')->get();
                 }
             } else {
-                return '2';
+                error_log('2');
+                return 2;
             }
         }
-        return '2';
+        error_log('21');
+        return 2;
     }
 
     public function submitVote($userId, $nominatorId)
@@ -49,6 +53,6 @@ class APIController extends Controller
 
     public function getResults()
     {
-        return Election::with('nominatorsData')->orderBy('status', 'ASC')->get();
+        return Election::with('nominatorsData')->where('status', '2')->get();
     }
 }
